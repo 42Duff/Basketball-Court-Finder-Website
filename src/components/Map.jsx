@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import pin from "../assets/CourtFinder_pin.svg";
 
 function Map() {
 
@@ -19,8 +20,13 @@ function Map() {
             detectRetina: true
         }).addTo(map);
 
+        var leafletIcon = L.icon ({
+            iconUrl: pin,
+            iconSize: [38, 95],
+        });
+
         // sample marker
-        L.marker([38.9072, -77.036]).addTo(map).bindPopup("Washington, DC");
+        L.marker([38.9072, -77.036], {icon:leafletIcon}).addTo(map).bindPopup("Washington, DC");
     }, []);
 
     return (

@@ -1,6 +1,6 @@
 import React from "react";
 import './Navbar.css';
-import logo from "../assets/CourtFinder.png";
+import logo from "../assets/CourtFinder.svg";
 
 function Navbar() {
 
@@ -8,7 +8,7 @@ function Navbar() {
 
         <nav className="navbar">
             <a href="/" className="navbar-title">
-                CourtFinder
+                <img src={logo} className="logo" />
             </a>
 
             <ul className="navbar-links">
