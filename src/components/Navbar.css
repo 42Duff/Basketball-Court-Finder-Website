@@ -1,5 +1,5 @@
 .navbar {
-    background-color: hsla(0, 0%, 0%, 0.855);
+    background-color: hsl(0, 0%, 31%);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,11 +19,12 @@
 
 .navbar-links {
     color: white;
-    font-size: 18px;
+    font-size: 25px;
+    font-weight: bold;
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 15px;
+    gap: 25px;
 }
 
 li {
