@@ -3,7 +3,6 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { COURT_STATUS } from "../constants/courtStatus";
 import { courtFinderMarker } from "../constants/courtFinderMarker";
-import Legend from "./Legend";
 
 function Map() {
 
@@ -46,6 +45,7 @@ function Map() {
         // sample marker
         L.marker([38.9072, -77.036], {icon:leafletIcon}).addTo(map).bindPopup("Washington, DC");
     }, []);
+
 
     return (
         <div

@@ -7,8 +7,11 @@ function HomePage() {
   return (
     <>
         <Navbar />
-        <Map />
-        <Legend />
+
+        <div className="map-wrapper">
+          <Map />
+          <Legend />
+        </div>
     </>
   );
 }
