@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import pin from "../assets/CourtFinder_pin.svg";
+import { COURT_STATUS } from "../constants/courtStatus";
+import { courtFinderMarker } from "../constants/courtFinderMarker";
+import Legend from "./Legend";
 
 function Map() {
 
@@ -20,9 +22,25 @@ function Map() {
             detectRetina: true
         }).addTo(map);
 
-        var leafletIcon = L.icon ({
-            iconUrl: pin,
+        const status = COURT_STATUS.MEDIUM;
+
+        // 🔹 TEMP test court
+        const court = {
+            courtType: "INDOOR", // try "OUTDOOR"
+        };
+        
+        const pinFill =
+            court.courtType === "INDOOR" ? "#000000" : "#ffffff";
+        
+        const leafletIcon = L.divIcon ({
+            className: "court-marker",
+            html: courtFinderMarker (
+                pinFill,
+                status.pin,
+                status.ball,
+        ),
             iconSize: [38, 95],
+            iconAnchor: [19, 95],
         });
 
         // sample marker
