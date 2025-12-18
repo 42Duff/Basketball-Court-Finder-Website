@@ -2,6 +2,7 @@ body {
   margin: 0;
 }
 
+/* positions the legend on to the map */
 .map-wrapper {
   position: relative;
   width: 100%;

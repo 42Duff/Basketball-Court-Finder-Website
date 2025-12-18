@@ -8,22 +8,59 @@ function Map() {
 
     useEffect(() => {
 
-        // to prevent duplicate initialization (necessary so strictmode doesn't break this code in prod)
+        // to prevent duplicate initialization (so strictmode doesn't break this code in prod)
         if (L.DomUtil.get("map")?._leaflet_id) {
         return;
         }
 
-        const map = L.map("map").setView([38.9072, -77.0369], 13);
+        // satellite tile layer
+        const satelliteLayer = L.tileLayer(
+            "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+            {
+                maxZoom: 19,
+                attribution:
+                "Tiles © Esri - Source: Esri, Maxar, Earthstar Geographics"
+            }
+        );
 
-        // tile layer (OpenStreetMap)
-        L.tileLayer("https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png", {
-            maxZoom: 19,
-            detectRetina: true
-        }).addTo(map);
+        // labels for satellite layer
+        const esriLabels = L.tileLayer(
+            "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+            {
+                maxZoom: 19,
+                attribution: "Labels © Esri"
+            }
+        );
+
+        // streetmap tile layer
+        const streetLayer = L.tileLayer(
+            "https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png", 
+            {
+                maxZoom: 19,
+                detectRetina: true
+            }
+        );
+
+        const map = L.map("map", {
+            center: [38.9072, -77.0369],
+            zoom: 13,
+            layers: [streetLayer],
+        });
+
+        const baseMaps = {
+            "Street Map": streetLayer,
+            "Satellite": satelliteLayer,
+        };
+
+        const overlayMaps = {
+            "Labels": esriLabels,
+        };
+
+        L.control.layers(baseMaps, overlayMaps).addTo(map);    
 
         const status = COURT_STATUS.MEDIUM;
 
-        // 🔹 TEMP test court
+        // TEMP test court (REMOVE ONCE BACKEND IS SET UP)
         const court = {
             courtType: "INDOOR", // try "OUTDOOR"
         };
@@ -42,7 +79,7 @@ function Map() {
             iconAnchor: [19, 95],
         });
 
-        // sample marker
+        // sample marker (RESTRUCTURE/REMOVE ONCE BACKEND IS SET UP)
         L.marker([38.9072, -77.036], {icon:leafletIcon}).addTo(map).bindPopup("Washington, DC");
     }, []);
 
