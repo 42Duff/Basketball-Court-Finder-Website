@@ -10,7 +10,7 @@ function Map() {
 
         // to prevent duplicate initialization (so strictmode doesn't break this code in prod)
         if (L.DomUtil.get("map")?._leaflet_id) {
-        return;
+            return;
         }
 
         // satellite tile layer
@@ -18,17 +18,18 @@ function Map() {
             "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
             {
                 maxZoom: 19,
+                pane: "satellite",
                 attribution:
                 "Tiles © Esri - Source: Esri, Maxar, Earthstar Geographics"
             }
         );
 
-        // labels for satellite layer
-        const esriLabels = L.tileLayer(
+        // labels for names and boundaries
+        const satelliteLabels = L.tileLayer(
             "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
             {
                 maxZoom: 19,
-                attribution: "Labels © Esri"
+                pane: "labels",
             }
         );
 
@@ -41,6 +42,7 @@ function Map() {
             }
         );
 
+        //starts in streetmap mode
         const map = L.map("map", {
             center: [38.9072, -77.0369],
             zoom: 13,
@@ -52,11 +54,25 @@ function Map() {
             "Satellite": satelliteLayer,
         };
 
-        const overlayMaps = {
-            "Labels": esriLabels,
-        };
+        L.control.layers(baseMaps).addTo(map);  
 
-        L.control.layers(baseMaps, overlayMaps).addTo(map);    
+        map.createPane("satellite");
+        map.createPane("labels");
+
+        map.getPane("satellite").style.zIndex = 200;
+        map.getPane("labels").style.zIndex = 400;
+        map.getPane("labels").style.pointerEvents = "none";
+
+        map.getPane("labels").style.filter = "drop-shadow(0 0 2px #000)";
+        
+        // Automatically toggles labels on satellite mode, removes otherwise
+        map.on("baselayerchange", (e) => {
+            if (e.name === "Satellite") {
+                map.addLayer(satelliteLabels);
+            } else {
+                map.removeLayer(satelliteLabels);
+            }
+        });
 
         const status = COURT_STATUS.MEDIUM;
 
