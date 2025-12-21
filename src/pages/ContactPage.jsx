@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
-import './Contact.css';
+import './ContactPage.css';
 
-function Contact() {
+function ContactPage() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [subject, setSubject] = useState("");
@@ -94,4 +94,4 @@ function Contact() {
     );
 }
 
-export default Contact;
+export default ContactPage;

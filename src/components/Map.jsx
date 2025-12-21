@@ -1,10 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { COURT_STATUS } from "../constants/courtStatus";
 import { courtFinderMarker } from "../constants/courtFinderMarker";
+import "./Map.css";
+import satellitePreview from "../assets/satellite-preview.jpg";
+import streetPreview from "../assets/street-preview.jpg";
 
 function Map() {
+
+    const mapRef = useRef(null);
+    const layersRef = useRef({});
+    const [mapMode, setMapMode] = useState("street");
 
     useEffect(() => {
 
@@ -49,13 +56,6 @@ function Map() {
             layers: [streetLayer],
         });
 
-        const baseMaps = {
-            "Street Map": streetLayer,
-            "Satellite": satelliteLayer,
-        };
-
-        L.control.layers(baseMaps).addTo(map);  
-
         map.createPane("satellite");
         map.createPane("labels");
 
@@ -64,15 +64,14 @@ function Map() {
         map.getPane("labels").style.pointerEvents = "none";
 
         map.getPane("labels").style.filter = "drop-shadow(0 0 2px #000)";
-        
-        // Automatically toggles labels on satellite mode, removes otherwise
-        map.on("baselayerchange", (e) => {
-            if (e.name === "Satellite") {
-                map.addLayer(satelliteLabels);
-            } else {
-                map.removeLayer(satelliteLabels);
-            }
-        });
+
+        mapRef.current = map;
+
+        layersRef.current = {
+            street: streetLayer,
+            satellite: satelliteLayer,
+            labels: satelliteLabels,
+        };
 
         const status = COURT_STATUS.MEDIUM;
 
@@ -99,15 +98,46 @@ function Map() {
         L.marker([38.9072, -77.036], {icon:leafletIcon}).addTo(map).bindPopup("Washington, DC");
     }, []);
 
+    const toggleMapMode = () => {
+        const map = mapRef.current;
+        const { street, satellite, labels } = layersRef.current;
+
+        if (!map) return;
+
+        if (mapMode === "street") {
+            map.removeLayer(street);
+            map.addLayer(satellite);
+            map.addLayer(labels);
+            setMapMode("satellite");
+        } else {
+            map.removeLayer(satellite);
+            map.removeLayer(labels);
+            map.addLayer(street);
+            setMapMode("street");
+        }
+    };
 
     return (
-        <div
-            id="map"
-            style={{
-                height: "80vh",
-                width: "100%",
-            }}
-        />
+        <>
+            <div
+                id="map"
+                style={{
+                    height: "80vh",
+                    width: "100%",
+                }}
+            />
+
+            <div className="map-toggle" onClick={toggleMapMode}>
+                <img
+                    src={
+                        mapMode === "street"
+                        ? satellitePreview
+                        : streetPreview
+                    }
+                    alt="Toggle map mode"
+                />
+            </div>
+        </>
     );
 }
 

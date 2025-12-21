@@ -1,10 +1,10 @@
 .legend-container {
     position: absolute;
-    top: 10em;
-    right: 20px;
+    top: 20em;
+    right: 10px;
 
     background-color: hsla(0, 0%, 0%, 0.753);
-    max-width: 20em;
+    max-width: 20vw;
     height: auto;
     border-radius: 25px;
     border: 5px solid hsla(28, 100%, 56%, 0.795);
@@ -38,7 +38,7 @@
 }
 
 .legend-row:not(:last-child) {
-    border-bottom: 1px solid hsla(0, 0%, 0%, 0.1);
+    border-bottom: 1px solid hsla(28, 100%, 56%, 0.3);
 }
 
 .legend-row span {

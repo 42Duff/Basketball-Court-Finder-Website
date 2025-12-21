@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import './Navbar.css';
 import logo from "../assets/CourtFinder.svg";
 
@@ -7,16 +8,22 @@ function Navbar() {
     return (
 
         <nav className="navbar">
-            <a href="/" className="navbar-title">
+            <a href="/" className="navbarTitle">
                 <img src={logo} className="logo" />
             </a>
 
-            <ul className="navbar-links">
-                <li><a href="/communities">Communities</a></li>
-                <li><a href="/contact">Contact</a></li>
+            <ul className="navbarLinks">
+                <li><Link to="/communities">Communities</Link></li>
+                <li><Link to="/trending">Trending</Link></li>
+                <li><Link to="/contact">Contact</Link></li>
             </ul>
-            
+
+            <div className="loginMenu">
+                <Link to="/login" className="loginBtn">Log In</Link>
+                <Link to="/signup" className="signUpBtn">Sign Up</Link> 
+            </div> 
         </nav>
+
     );
 }
 
