@@ -16,3 +16,30 @@
     height: 100%;
     object-fit: cover;
 }
+
+.icon-sidebar {
+    background-color: hsla(0, 0%, 0%, 0.6);
+    position: absolute;
+    top: 15px;
+    right: 0px!important;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.icon-btn {
+    background: transparent;
+    width: 40px;
+    height: 40px;
+    border: none;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    margin: 0px;
+}
+
+.icon-btn:hover {
+    background-color: hsla(0, 0%, 0%, 0.8);
+}

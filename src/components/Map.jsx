@@ -7,7 +7,7 @@ import "./Map.css";
 import satellitePreview from "../assets/satellite-preview.jpg";
 import streetPreview from "../assets/street-preview.jpg";
 
-function Map() {
+function Map( { onToggleLegend, onAddCourt } ) {
 
     const mapRef = useRef(null);
     const layersRef = useRef({});
@@ -119,6 +119,7 @@ function Map() {
 
     return (
         <>
+        
             <div
                 id="map"
                 style={{
@@ -137,6 +138,25 @@ function Map() {
                     alt="Toggle map mode"
                 />
             </div>
+
+            <div className="icon-sidebar">
+                <button
+                    className="icon-btn"
+                    onClick={onToggleLegend}
+                    title="Toggle Legend"
+                >
+                    🗺️
+                </button>
+
+                <button
+                    className="icon-btn"
+                    onClick={onAddCourt}
+                    title="Add Court"
+                >
+                    📍
+                </button>
+            </div>
+
         </>
     );
 }
