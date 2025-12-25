@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  background-color: hsl(210, 9%, 13%);;
 }
 
 /* positions the legend on to the map */

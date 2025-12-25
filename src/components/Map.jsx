@@ -54,7 +54,12 @@ function Map( { onToggleLegend, onAddCourt } ) {
             center: [38.9072, -77.0369],
             zoom: 13,
             layers: [streetLayer],
+            zoomControl: false,
         });
+
+        L.control.zoom({
+            position: "bottomleft",
+        }).addTo(map);
 
         map.createPane("satellite");
         map.createPane("labels");
@@ -128,22 +133,24 @@ function Map( { onToggleLegend, onAddCourt } ) {
                 }}
             />
 
-            <div className="map-toggle" onClick={toggleMapMode}>
-                <img
-                    src={
-                        mapMode === "street"
-                        ? satellitePreview
-                        : streetPreview
-                    }
-                    alt="Toggle map mode"
-                />
+            <div className="map-toggle-wrapper" data-tooltip="toggle-map-view">
+                <div className="map-toggle" onClick={toggleMapMode}>
+                    <img
+                        src={
+                            mapMode === "street"
+                            ? satellitePreview
+                            : streetPreview
+                        }
+                        alt="Toggle map mode"
+                    />
+                </div>
             </div>
 
             <div className="icon-sidebar">
                 <button
                     className="icon-btn"
                     onClick={onToggleLegend}
-                    title="Toggle Legend"
+                    data-tooltip="Toggle Legend"
                 >
                     🗺️
                 </button>
@@ -151,7 +158,7 @@ function Map( { onToggleLegend, onAddCourt } ) {
                 <button
                     className="icon-btn"
                     onClick={onAddCourt}
-                    title="Add Court"
+                    data-tooltip="Add Court"
                 >
                     📍
                 </button>
