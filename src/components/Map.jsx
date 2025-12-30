@@ -133,7 +133,7 @@ function Map( { onToggleLegend, onAddCourt } ) {
                 }}
             />
 
-            <div className="map-toggle-wrapper" data-tooltip="toggle-map-view">
+            <div className="map-toggle-wrapper" data-tooltip="Toggle Map Mode">
                 <div className="map-toggle" onClick={toggleMapMode}>
                     <img
                         src={

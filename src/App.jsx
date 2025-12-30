@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
+import CommunitiesPage from "./pages/CommunitiesPage.jsx";
 
 function App() {
   return (
@@ -12,9 +13,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/contactPage" element={<ContactPage />} />
+        <Route path="/ContactPage" element={<ContactPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/CommunitiesPage" element={<CommunitiesPage />} />
       </Routes>
     </Router>
   );

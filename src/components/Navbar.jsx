@@ -13,9 +13,9 @@ function Navbar() {
             </a>
 
             <ul className="navbarLinks">
-                <li><Link to="/communities">Communities</Link></li>
-                <li><Link to="/trending">Trending</Link></li>
-                <li><Link to="/contact">Contact</Link></li>
+                <li><Link to="/CommunitiesPage">Communities</Link></li>
+                <li><Link to="/TrendingPage">Trending</Link></li>
+                <li><Link to="/ContactPage">Contact</Link></li>
             </ul>
 
             <div className="loginMenu">

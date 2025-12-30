@@ -31,7 +31,7 @@ li {
 }
 
 li a {
-    color: #ffffff;
+    color: hsl(0, 0%, 100%);
     text-decoration: none;
     display: block;
     padding: 0px 12px;
@@ -41,7 +41,7 @@ li a {
 }
 
 li a:hover {
-    color: rgb(255, 131, 15);
+    color: hsl(29, 100%, 53%);
 }
 
 .loginMenu {
@@ -53,13 +53,14 @@ li a:hover {
 
 .loginBtn,
 .signUpBtn {
+     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     padding: 8px 16px;
     border-radius: 8px;
     font-weight: 600;
     text-decoration: none;
     transition: all 0.2 ease;
     cursor: pointer;
-    color: white;
+    color: hsl(0, 0%, 100%);
 }
 
 .loginBtn:hover {
@@ -68,20 +69,20 @@ li a:hover {
 
 /* Log In = outline */
 .logInBtn {
-    border: 2px solid #ff7a00;
-    color: #ff7a00;
+    border: 2px solid hsl(29, 100%, 50%);
+    color: hsl(29, 100%, 50%);
 }
 
 .logInBtn:hover {
-    background: rgba(255, 255, 255, 0.877);
+    background: hsla(0, 0%, 100%, 0.877);
 }
 
 /* Sign Up = primary */
 .signUpBtn {
-    background: #ff7a00;
-    color: white;
+    background: hsl(29, 100%, 50%);
+    color: hsl(0, 0%, 100%);
 }
 
 .signUpBtn:hover {
-    background: #e66f00;
+    background: hsl(29, 100%, 45%);
 }
