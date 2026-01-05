@@ -1,3 +1,8 @@
+.map {
+    height: 100%;
+    width: 100%;
+}
+
 .map-toggle-wrapper {
     position: absolute;
     bottom: 16px;
@@ -15,12 +20,10 @@
     transition: opacity 0.15s ease;
     background-color: hsla(0, 0%, 0%, 0.85);
     color: white;
-
     padding: 6px 8px;
     border-radius: 6px;
     font-size: 12px;
     white-space: nowrap;
-
     transition: opacity 0.15s ease;
     z-index: 2000
 }
@@ -77,14 +80,12 @@
     right: 110%;
     top: 50%;
     transform: translateY(-50%);
-
     background: rgba(0, 0, 0, 0.85);
     color: white;
     padding: 6px 8px;
     border-radius: 6px;
     font-size: 12px;
     white-space: nowrap;
-
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.15s ease;
@@ -104,19 +105,13 @@
     height: 36px;
     line-height: 36px;
     font-size: 20px;
-
-    background-color: hsla(0, 0%, 7%, 0.842);
+    background-color: hsla(0, 0%, 7%, 0.8);
     color: white;
     border: none;
 }
 
-.leaflet-top.leaflet-right .leaflet-control-zoom {
-    margin-top: 50px;   /* push down */
-    margin-right: 12px; /* push inward */
-}
-
 .leaflet-control-zoom a:hover {
-    background-color: hsla(0, 0%, 0%, 0.85);
+    background-color: hsla(0, 0%, 0%, 0.9);
 }
 
 .leaflet-bar {
@@ -145,8 +140,10 @@
 
 .leaflet-left .leaflet-control {
     margin-left: 15px;
+    margin-bottom: 15px;
 }
 
-.leaflet-bottom .leaflet-control {
-    margin-bottom: 15px;
+.leaflet-container .leaflet-control-attribution {
+    margin-bottom: 0;
+    background-color: rgba(255, 255, 255, 0.6);
 }

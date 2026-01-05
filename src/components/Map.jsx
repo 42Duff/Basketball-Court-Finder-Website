@@ -125,13 +125,7 @@ function Map( { onToggleLegend, onAddCourt } ) {
     return (
         <>
         
-            <div
-                id="map"
-                style={{
-                    height: "80vh",
-                    width: "100%",
-                }}
-            />
+            <div id="map" className="map" />
 
             <div className="map-toggle-wrapper" data-tooltip="Toggle Map Mode">
                 <div className="map-toggle" onClick={toggleMapMode}>

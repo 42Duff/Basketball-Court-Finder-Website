@@ -8,6 +8,7 @@
 
 .addCourtContainer {
     background-color: hsl(210, 9%, 13%);
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -69,4 +70,19 @@
 .formButtons button:hover {
     background: hsla(28, 100%, 56%);
     color: hsl(0, 0%, 100%);
+}
+
+.closeModalBtn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: hsl(0, 0%, 100%);
+}
+
+.closeModalBtn:hover {
+    color: hsla(28, 100%, 56%);
 }
