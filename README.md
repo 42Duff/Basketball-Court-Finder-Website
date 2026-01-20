@@ -40,12 +40,12 @@ and satellite view mode:
 CourtFinder is actively in development. The frontend and map interactions are almost complete. Still working on adding a filters popup, instructional popups in addCourt mode, and creating working logic for the 'Search Location' and 'Show My Location' features. Backend features such as persistent user reporting and authentication are planned.
 
 ### Planned Features
-- User accounts & authentication
-- Persistent court activity reporting
-- Heatmap-based historical activity
-- Mobile optimization
-- Community groups page where users can communicate
-- Trending page that highlights different categories (Hottest courts, Planned Hoop Sessions, Courts of the Month/Week, etc.)
+* User accounts & authentication
+* Persistent court activity reporting
+* Heatmap-based historical activity
+* Mobile optimization
+* Community groups page where users can communicate
+* Trending page that highlights different categories (Hottest courts, Planned Hoop Sessions, Courts of the Month/Week, etc.)
 
 ## Why I Built This
 Basketball players often spend a lot of time trying to find active courts only to be met with false hope. 
