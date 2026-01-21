@@ -1,15 +1,15 @@
 export const COURT_STATUS = {
-    BUSY: {
-        pin: "#c92a2a",
-        ball: "#c92a2a",
+    LOW: {
+        pin: "#2ca21e",
+        ball: "#2ca21e",
     },
     MEDIUM: {
         pin: "#ff8310",
         ball: "#ff8310",
     },
-    LOW: {
-        pin: "#2ca21e",
-        ball: "#2ca21e",
+    HIGH: {
+        pin: "#c92a2a",
+        ball: "#c92a2a",
     },
     UNREPORTED: {
         pin: "#c5c5c5",

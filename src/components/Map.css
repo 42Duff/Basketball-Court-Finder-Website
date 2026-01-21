@@ -1,6 +1,7 @@
 .map {
     height: 100%;
     width: 100%;
+    position: relative;
 }
 
 .map-toggle-wrapper {
@@ -80,7 +81,7 @@
     right: 110%;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.85);
+    background: hsla(0, 0%, 0%, 0.85);
     color: white;
     padding: 6px 8px;
     border-radius: 6px;
@@ -146,4 +147,8 @@
 .leaflet-container .leaflet-control-attribution {
     margin-bottom: 0;
     background-color: rgba(255, 255, 255, 0.6);
+}
+
+.leaflet-container {
+    cursor: grab;
 }

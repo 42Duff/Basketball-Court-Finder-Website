@@ -1,0 +1,88 @@
+.addCourtModal {
+    min-height: 95vh;
+    display: flex;
+    justify-content: center;
+    background: hsla(0, 0%, 0%, 0.4);
+    padding-top: 50px;
+}
+
+.addCourtContainer {
+    background-color: hsl(210, 9%, 13%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 55vh;
+    width: 35vw;
+    border-radius: 12px;
+    border: 5px solid hsla(28, 100%, 56%, 0.75);
+    color: hsl(0, 0%, 100%);
+}
+
+.addCourtH1 {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding-top: 15px;
+}
+
+.addCourtForm {
+    display: block;
+    flex-direction: column;
+}
+
+.formGroup label {
+    font-size: 1.2em;
+    font-weight: 500;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-top: 10px;
+    padding-left: 0;
+}
+
+.formGroup input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.formGroup select {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid hsl(0, 0%, 80%);
+    font-size: 14px;
+    background-color: hsl(0, 0%, 100%);
+}
+
+.formButtons {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.formButtons button {
+    padding: 10px 20px;
+    border: 2px solid hsla(28, 100%, 56%, 0.75);
+    color: hsla(28, 100%, 56%);
+    background: hsl(0, 0%, 100%);
+    font-size: 15px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    cursor: pointer;
+}
+
+.formButtons button:hover {
+    background: hsla(28, 100%, 56%);
+    color: hsl(0, 0%, 100%);
+}
+
+.closeAddCourtModalBtn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: hsl(0, 0%, 100%);
+}
+
+.closeAddCourtModalBtn:hover {
+    color: hsla(28, 100%, 56%);
+}

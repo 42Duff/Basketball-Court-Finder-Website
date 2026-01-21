@@ -18,8 +18,8 @@ function Navbar() {
                 <li><Link to="/ContactPage">Contact</Link></li>
             </ul>
 
-            <div className="loginMenu">
-                <Link to="/login" className="loginBtn">Log In</Link>
+            <div className="logInMenu">
+                <Link to="/login" className="logInBtn">Log In</Link>
                 <Link to="/signup" className="signUpBtn">Sign Up</Link> 
             </div> 
         </nav>

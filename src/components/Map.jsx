@@ -6,8 +6,9 @@ import { courtFinderMarker } from "../constants/courtFinderMarker";
 import "./Map.css";
 import satellitePreview from "../assets/satellite-preview.jpg";
 import streetPreview from "../assets/street-preview.jpg";
+import pinCursor from "../assets/cursorMarkerFull.png";
 
-function Map( { onToggleLegend, onAddCourt } ) {
+function Map( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters } ) {
 
     const mapRef = useRef(null);
     const layersRef = useRef({});
@@ -45,7 +46,11 @@ function Map( { onToggleLegend, onAddCourt } ) {
             "https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png", 
             {
                 maxZoom: 19,
-                detectRetina: true
+                detectRetina: true,
+                 attribution:
+                    '&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a> ' +
+                    '&copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> ' +
+                    '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
             }
         );
 
@@ -78,11 +83,13 @@ function Map( { onToggleLegend, onAddCourt } ) {
             labels: satelliteLabels,
         };
 
-        const status = COURT_STATUS.MEDIUM;
+        // STATUS.LOW MEDIUM BUSY OR UNREPORTED
+        // NEED TO SEPARATE HISTORICAL VS CURRENT REPORTED STATUS
+        const status = COURT_STATUS.UNREPORTED;
 
         // TEMP test court (REMOVE ONCE BACKEND IS SET UP)
         const court = {
-            courtType: "INDOOR", // try "OUTDOOR"
+            courtType: "OUTDOOR", // or try "OUTDOOR"
         };
         
         const pinFill =
@@ -122,10 +129,38 @@ function Map( { onToggleLegend, onAddCourt } ) {
         }
     };
 
+    // ADD COURT MODE
+    useEffect(() => {
+        const map = mapRef.current;
+        if (!map) return;
+
+        if (addCourtMode) {
+            map.getContainer().style.cursor = `url("${pinCursor}") 25 25, auto`;
+
+            const handleClick = (e) => {
+                L.marker(e.latlng).addTo(map).bindPopup("New Court").openPopup();
+            };
+
+            map.on("click", handleClick);
+
+            // cleanup for when mode is off
+            return () => {
+                map.getContainer().style.cursor = "grab";
+                map.off("click", handleClick);
+            };
+        } else {
+            // make cursor normal if mode is off
+            map.getContainer().style.cursor = "grab";
+        }
+    }, [addCourtMode]);
+
     return (
         <>
         
-            <div id="map" className="map" />
+            <div
+                id="map" 
+                className="map"
+            />
 
             <div className="map-toggle-wrapper" data-tooltip="Toggle Map Mode">
                 <div className="map-toggle" onClick={toggleMapMode}>
@@ -155,6 +190,32 @@ function Map( { onToggleLegend, onAddCourt } ) {
                     data-tooltip="Add Court"
                 >
                     📍
+                </button>
+
+                <button
+                    className="icon-btn"
+                    onClick={onToggleFilters}
+                    data-tooltip="Filters"
+                >
+                    <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    >
+                        <line x1="4" y1="6" x2="20" y2="6" />
+                        <circle cx="10" cy="6" r="2" />
+
+                        <line x1="4" y1="12" x2="20" y2="12" />
+                        <circle cx="14" cy="12" r="2" />
+
+                        <line x1="4" y1="18" x2="20" y2="18" />
+                        <circle cx="8" cy="18" r="2" />
+                    </svg>
                 </button>
             </div>
 

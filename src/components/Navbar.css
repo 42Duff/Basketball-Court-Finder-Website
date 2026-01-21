@@ -44,18 +44,21 @@ li a:hover {
     color: hsl(29, 100%, 53%);
 }
 
-.loginMenu {
+.logInMenu {
     display: flex;
-    gap: 12px;
     align-items: center;
     margin-left: auto;
+    border: 2px solid white;
+    border-radius: 8px;
+    overflow: hidden;
+    color: white;
+    background-color: hsl(0, 0%, 17%);
 }
 
-.loginBtn,
+.logInBtn,
 .signUpBtn {
-     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     padding: 8px 16px;
-    border-radius: 8px;
     font-weight: 600;
     text-decoration: none;
     transition: all 0.2 ease;
@@ -63,26 +66,7 @@ li a:hover {
     color: hsl(0, 0%, 100%);
 }
 
-.loginBtn:hover {
-    background: rgba(255, 122, 0, 0.1);
-}
-
-/* Log In = outline */
-.logInBtn {
-    border: 2px solid hsl(29, 100%, 50%);
-    color: hsl(29, 100%, 50%);
-}
-
-.logInBtn:hover {
-    background: hsla(0, 0%, 100%, 0.877);
-}
-
-/* Sign Up = primary */
-.signUpBtn {
-    background: hsl(29, 100%, 50%);
-    color: hsl(0, 0%, 100%);
-}
-
-.signUpBtn:hover {
-    background: hsl(29, 100%, 45%);
+.logInBtn:hover, .signUpBtn:hover {
+    color: hsl(29, 100%, 53%);
+    background-color: hsl(213, 8%, 21%);
 }

@@ -33,7 +33,7 @@ function Legend() {
 
                 <LegendRow
                     label="High (10+ People)"
-                    status={COURT_STATUS.BUSY}
+                    status={COURT_STATUS.HIGH}
                 />
 
             </ul>

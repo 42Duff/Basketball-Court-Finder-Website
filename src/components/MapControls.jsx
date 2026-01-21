@@ -11,6 +11,29 @@ function MapControls() {
                     placeholder="Search Location"
                 />
 
+                <button
+                    className="search-btn"
+                    /* onClick={search} */
+                    data-tooltip="Search"
+                >
+                    <svg
+                        width="30"
+                        height="30"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    >
+                        {/* Lens */}
+                        <circle cx="11" cy="11" r="7" />
+
+                        {/* Handle */}
+                        <line x1="16.5" y1="16.5" x2="21" y2="21" />
+                    </svg>
+                </button>
+
                 <button 
                     className="show-location" 
                     /* onClick={showLocation} */
@@ -32,32 +55,6 @@ function MapControls() {
                         <line x1="12" y1="18" x2="12" y2="22" />
                         <line x1="2" y1="12" x2="6" y2="12" />
                         <line x1="18" y1="12" x2="22" y2="12" />
-                    </svg>
-                </button>
-
-                <button
-                    className="filter-btn"
-                    /* onClick={showFilters} */
-                    data-tooltip="Filters"
-                >
-                    <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    >
-                        <line x1="4" y1="6" x2="20" y2="6" />
-                        <circle cx="10" cy="6" r="2" />
-
-                        <line x1="4" y1="12" x2="20" y2="12" />
-                        <circle cx="14" cy="12" r="2" />
-
-                        <line x1="4" y1="18" x2="20" y2="18" />
-                        <circle cx="8" cy="18" r="2" />
                     </svg>
                 </button>
 
