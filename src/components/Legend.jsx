@@ -5,9 +5,13 @@ import BallIcon from "./BallIcon";
 import { COURT_STATUS } from "../constants/courtStatus";
 
 
-function Legend() {
+function Legend( { closeLegendBtn } ) {
     return (
         <div className="legend-container">
+
+            <button className="closeLegendBtn" onClick={closeLegendBtn}>
+                &times;
+            </button>
 
             <h1 className="legend-title">Legend</h1>
             <h2 className="legendDescription">* Ball = live data

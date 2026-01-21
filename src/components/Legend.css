@@ -65,3 +65,18 @@
     width: auto;
     justify-self: center;
 }
+
+.closeLegendBtn {
+    position: absolute;
+    top: 5px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: hsla(0, 0%, 100%, 0.8);
+}
+
+.closeLegendBtn:hover {
+    color: hsla(28, 100%, 56%);
+}

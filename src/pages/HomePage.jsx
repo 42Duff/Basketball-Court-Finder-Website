@@ -13,6 +13,8 @@ function HomePage() {
     setShowLegend(prev => !prev);
   };
 
+  const closeLegendBtn = () => setShowLegend(false);
+
   //toggle AddCourt Mode
   const [showAddCourtMode, setShowAddCourtMode] = useState(false);
 
@@ -40,9 +42,12 @@ function HomePage() {
           />
 
           <MapControls />
-          {showLegend && <Legend />}
+          {showLegend && 
+            <Legend closeLegendBtn={closeLegendBtn} />
+          }
           {showFilters && 
-            <FiltersModal closeFiltersModal={closeFiltersBtn} />}
+            <FiltersModal closeFiltersModal={closeFiltersBtn} />
+          }
         </div>
     </>
   );
