@@ -1,19 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import "./MapControls.css";
 
-function MapControls() {
+function MapControls({ locateUser, onSearch }) {
+    const [query, setQuery] = React.useState("");
+
+    const handleSubmit = () => {
+        if (!query.trim()) return;
+        onSearch(query);
+    };
+
     return (
         <div className="map-controls-container">
 
             <div className="map-controls">
-                <input type="text" 
+                <input 
+                    type="text" 
                     className="map-search" 
                     placeholder="Search Location"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
                 />
 
                 <button
                     className="search-btn"
-                    /* onClick={search} */
+                    onClick={handleSubmit}
                     data-tooltip="Search"
                 >
                     <svg
@@ -36,7 +47,7 @@ function MapControls() {
 
                 <button 
                     className="show-location" 
-                    /* onClick={showLocation} */
+                    onClick={locateUser}
                     data-tooltip="Show My Location"
                 >
                     <svg

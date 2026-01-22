@@ -8,7 +8,7 @@ import satellitePreview from "../assets/satellite-preview.jpg";
 import streetPreview from "../assets/street-preview.jpg";
 import pinCursor from "../assets/cursorMarkerFull.png";
 
-function Map( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters } ) {
+function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLocateUserTrigger, searchResult } ) {
 
     const mapRef = useRef(null);
     const layersRef = useRef({});
@@ -109,6 +109,47 @@ function Map( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters } ) {
         // sample marker (RESTRUCTURE/REMOVE ONCE BACKEND IS SET UP)
         L.marker([38.9072, -77.036], {icon:leafletIcon}).addTo(map).bindPopup("Washington, DC");
     }, []);
+
+    // Locate and Use User Position
+    useEffect(() => {
+        if (!mapRef.current || onLocateUserTrigger === 0) return;
+
+        if (!navigator.geolocation) {
+            alert("Geolocation is not supported by your browser");
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+
+                const map = mapRef.current;
+
+                map.setView([latitude, longitude], 15, {
+                    animate: true,
+                });
+            },
+            (error) => {
+                console.error(error);
+                alert("Location access denied.");
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+            }
+        );
+    }, [onLocateUserTrigger]);
+
+    // Searchbar Logic
+    useEffect(() => {
+        if (!mapRef.current || !searchResult) return;
+
+        mapRef.current.setView(
+            [searchResult.lat, searchResult.lng],
+            12,
+            { animate: true }
+        );
+    }, [searchResult])
 
     const toggleMapMode = () => {
         const map = mapRef.current;
