@@ -8,6 +8,28 @@ import satellitePreview from "../assets/satellite-preview.jpg";
 import streetPreview from "../assets/street-preview.jpg";
 import pinCursor from "../assets/cursorMarkerFull.png";
 
+function createCourtIcon(court) {
+    // STATUS.LOW MEDIUM BUSY OR UNREPORTED
+    // NEED TO SEPARATE HISTORICAL VS CURRENT REPORTED STATUS
+    const status = court.status ?? COURT_STATUS.UNREPORTED;
+
+    // TEMP test court (REMOVE ONCE BACKEND IS SET UP)
+    const pinFill =
+        court.courtType === "INDOOR" ? "#000000" : "#ffffff";
+
+    return L.divIcon({
+        className: "court-marker",
+        html: courtFinderMarker(
+            pinFill,
+            status.pin,
+            status.ball
+        ),
+        iconSize: [38, 54],
+        iconAnchor: [19, 47.5],
+        popupAnchor: [0, -30],
+    });
+}
+
 function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLocateUserTrigger, searchResult } ) {
 
     const mapRef = useRef(null);
@@ -83,33 +105,19 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
             labels: satelliteLabels,
         };
 
-        // STATUS.LOW MEDIUM BUSY OR UNREPORTED
-        // NEED TO SEPARATE HISTORICAL VS CURRENT REPORTED STATUS
-        const status = COURT_STATUS.UNREPORTED;
-
-        // TEMP test court (REMOVE ONCE BACKEND IS SET UP)
-        const court = {
-            courtType: "OUTDOOR", // or try "OUTDOOR"
-        };
-        
-        const pinFill =
-            court.courtType === "INDOOR" ? "#000000" : "#ffffff";
-        
-        const leafletIcon = L.divIcon ({
-            className: "court-marker",
-            html: courtFinderMarker (
-                pinFill,
-                status.pin,
-                status.ball,
-        ),
-            iconSize: [38, 95],
-            iconAnchor: [19, 95],
-        });
-
         // sample marker (RESTRUCTURE/REMOVE ONCE BACKEND IS SET UP)
-        L.marker([38.9072, -77.036], {icon:leafletIcon}).addTo(map).bindPopup("Washington, DC");
-    }, []);
+        const court = {
+            courtType: "OUTDOOR",
+            status: COURT_STATUS.UNREPORTED,
+        };
 
+        L.marker([38.9072, -77.036], {
+            icon: createCourtIcon(court),
+        })
+        .addTo(map)
+        .bindPopup("Washington, DC");
+    });
+                                                                                                                                                                                                                                                                                                                                                                         
     // Locate and Use User Position
     useEffect(() => {
         if (!mapRef.current || onLocateUserTrigger === 0) return;
@@ -176,11 +184,20 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
         if (!map) return;
 
         if (addCourtMode) {
-            map.getContainer().style.cursor = `url("${pinCursor}") 25 25, auto`;
+            map.getContainer().style.cursor = `url("${pinCursor}") 25 95, auto`;
 
             const handleClick = (e) => {
-                L.marker(e.latlng).addTo(map).bindPopup("New Court").openPopup();
+                const tempCourt = {
+                    courtType: "OUTDOOR",
+                    status: COURT_STATUS.UNREPORTED,
             };
+
+            L.marker(e.latlng, {
+                icon: createCourtIcon(tempCourt),
+            })
+                .addTo(map)
+                .bindPopup("New Court (Unreported)")
+        };
 
             map.on("click", handleClick);
 

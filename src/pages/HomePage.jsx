@@ -3,6 +3,7 @@ import Map from "../components/Map";
 import Legend from "../components/Legend";
 import MapControls from "../components/MapControls";
 import FiltersModal from "../components/FiltersModal";
+import AddCourtPopup from "../components/AddCourtPopup";
 
 function HomePage() {
 
@@ -78,13 +79,16 @@ function HomePage() {
             locateUser={locateUser}
             onSearch={handleSearch}
           />
-          
+
           {showLegend && 
             <Legend closeLegendBtn={closeLegendBtn} />
           }
           {showFilters && 
             <FiltersModal closeFiltersModal={closeFiltersBtn} />
           }
+          {showAddCourtMode && (
+            <AddCourtPopup closeAddCourtPopup={() => setShowAddCourtMode(false)} />
+          )}
         </div>
     </>
   );

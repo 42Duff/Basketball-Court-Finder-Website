@@ -1,0 +1,37 @@
+.addCourtPopup {
+    position: absolute;
+    border: 3px solid hsla(28, 100%, 56%, 0.75);
+    background-color: hsla(0, 0%, 0%, 0.7);
+    color: hsl(0, 0%, 100%);
+    top: 1rem;
+    right: 50rem;
+    overflow: hidden;
+    padding: 0.75rem 1rem;
+    width: min(30vw, 220px);
+    z-index: 1000;
+}
+
+.addCourtInfo {
+    padding: 0px;
+    margin: 0;
+    font-size: clamp(0.7rem, 1.2vw, 20px);
+    line-height: 1.2;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.closeAddCourtPopupBtn {
+    position: absolute;
+    padding: 4px 8px;
+    top: 0px;
+    right: 0px;
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    cursor: pointer;
+    color: hsl(0, 0%, 100%);
+}
+
+.closeAddCourtPopupBtn:hover {
+    color: hsla(28, 100%, 56%);
+}
