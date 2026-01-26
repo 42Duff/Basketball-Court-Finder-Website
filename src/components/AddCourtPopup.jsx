@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import './AddCourtPopup.css';
 
-function AddCourtPopup() {
-
-    const [showAddCourtPopup, setShowAddCourtPopup] = useState(true);
-
-    const closeAddCourtPopup = () => setShowAddCourtPopup(false);
-
-    if(!showAddCourtPopup) return null;
+function AddCourtPopup({closeAddCourtPopup }) {
 
     return (
         <div className="addCourtPopup">

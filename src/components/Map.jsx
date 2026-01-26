@@ -35,6 +35,7 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
     const mapRef = useRef(null);
     const layersRef = useRef({});
     const [mapMode, setMapMode] = useState("street");
+    const tempCourtMarkerRef = useRef(null);
 
     useEffect(() => {
 
@@ -192,12 +193,18 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
                     status: COURT_STATUS.UNREPORTED,
             };
 
-            L.marker(e.latlng, {
-                icon: createCourtIcon(tempCourt),
-            })
-                .addTo(map)
-                .bindPopup("New Court (Unreported)")
-        };
+            if (tempCourtMarkerRef.current) {
+                // existing marker moves to new click
+                tempCourtMarkerRef.current.setLatLng(e.latlng);
+            } else {
+                // Marker is created ONCE
+                tempCourtMarkerRef.current = L.marker(e.latlng, {
+                    icon: createCourtIcon(tempCourt),
+                })
+                    .addTo(map)
+                    .bindPopup("New Court (Unreported)");
+                }
+            };
 
             map.on("click", handleClick);
 
@@ -207,6 +214,11 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
                 map.off("click", handleClick);
             };
         } else {
+            // remove temp marker when addcourtmode is off
+            if (tempCourtMarkerRef.current) {
+                map.removeLayer(tempCourtMarkerRef.current);
+                tempCourtMarkerRef.current = null;
+            }
             // make cursor normal if mode is off
             map.getContainer().style.cursor = "grab";
         }
