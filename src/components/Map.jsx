@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { renderToString } from "react-dom/server";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { COURT_STATUS } from "../constants/courtStatus";
@@ -7,6 +8,7 @@ import "./Map.css";
 import satellitePreview from "../assets/satellite-preview.jpg";
 import streetPreview from "../assets/street-preview.jpg";
 import pinCursor from "../assets/cursorMarkerFull.png";
+import SaveCourtPopup from "./saveCourtPopup";
 
 function createCourtIcon(court) {
     // STATUS.LOW MEDIUM BUSY OR UNREPORTED
@@ -42,6 +44,7 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
     const layersRef = useRef({});
     const [mapMode, setMapMode] = useState("street");
     const tempCourtMarkerRef = useRef(null);
+    const popupHtml = renderToString(<SaveCourtPopup />);
 
     useEffect(() => {
 
@@ -205,14 +208,14 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
 
             if (tempCourtMarkerRef.current) {
                 // existing marker moves to new click
-                tempCourtMarkerRef.current.setLatLng(e.latlng);
+                tempCourtMarkerRef.current.setLatLng(e.latlng).openPopup();
             } else {
                 // Marker is created ONCE
                 tempCourtMarkerRef.current = L.marker(e.latlng, {
                     icon: createCourtIcon(tempCourt),
                 })
                     .addTo(map)
-                    .bindPopup("New Court (Unreported)");
+                    .bindPopup(popupHtml).openPopup();
                 }
             };
 

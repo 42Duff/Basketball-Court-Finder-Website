@@ -3,15 +3,16 @@
     display: flex;
     align-items: center;
     padding: 0px 20px;
+    height: 100px;
 }
 
 .navbarTitle {
-    margin-top: 5px;
-    margin-left: 2vw;
+    display: flex;
+    align-items: center;
 }
 
 .logo {
-    height: 100px;
+    height: 85px;
     width: auto;
 }
 
@@ -19,14 +20,15 @@
     display: flex;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: white;
-    font-size: 1.15em;
+    font-size: 1em;
     font-weight: bold;
     margin-left: 1vw;
-    padding: 10px;
-    display: flex;
+    padding: 0px;
+    padding-top: 45px;
 }
 
 li {
+    display: flex;
     list-style-type: none;
 }
 
@@ -34,10 +36,8 @@ li a {
     color: hsl(0, 0%, 100%);
     text-decoration: none;
     display: block;
-    padding: 0px 12px;
+    padding: 0px 14px;
     display: flex;
-    align-items: center;
-    margin-top: 50px;
 }
 
 li a:hover {
