@@ -11,18 +11,24 @@ import pinCursor from "../assets/cursorMarkerFull.png";
 function createCourtIcon(court) {
     // STATUS.LOW MEDIUM BUSY OR UNREPORTED
     // NEED TO SEPARATE HISTORICAL VS CURRENT REPORTED STATUS
-    const status = court.status ?? COURT_STATUS.UNREPORTED;
+    const currentStatus = 
+        court.currentStatus ?? COURT_STATUS.UNREPORTED;
 
-    // TEMP test court (REMOVE ONCE BACKEND IS SET UP)
-    const pinFill =
-        court.courtType === "INDOOR" ? "#000000" : "#ffffff";
+    const historicalStatus =
+        court.historicalStatus ?? COURT_STATUS.UNREPORTED;
+
+    const pinFill = court.isTemporary
+        ? "#a6a6a6"
+        : court.courtType === "INDOOR" 
+        ? "#000000" 
+        : "#ffffff";
 
     return L.divIcon({
         className: "court-marker",
         html: courtFinderMarker(
             pinFill,
-            status.pin,
-            status.ball
+            historicalStatus.pin,
+            currentStatus.ball
         ),
         iconSize: [38, 54],
         iconAnchor: [19, 47.5],
@@ -108,8 +114,9 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
 
         // sample marker (RESTRUCTURE/REMOVE ONCE BACKEND IS SET UP)
         const court = {
-            courtType: "OUTDOOR",
-            status: COURT_STATUS.UNREPORTED,
+            courtType: "INDOOR",
+            historicalStatus: COURT_STATUS.MEDIUM,
+            currentStatus: COURT_STATUS.HIGH,
         };
 
         L.marker([38.9072, -77.036], {
@@ -184,13 +191,16 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
         const map = mapRef.current;
         if (!map) return;
 
+        const container = map.getContainer();
+
         if (addCourtMode) {
-            map.getContainer().style.cursor = `url("${pinCursor}") 25 95, auto`;
+            container.style.cursor = `url("${pinCursor}") 25 95, auto`;
 
             const handleClick = (e) => {
                 const tempCourt = {
-                    courtType: "OUTDOOR",
-                    status: COURT_STATUS.UNREPORTED,
+                    isTemporary: true,
+                    currentStatus: COURT_STATUS.UNREPORTED,
+                    historicalStatus: COURT_STATUS.UNREPORTED,
             };
 
             if (tempCourtMarkerRef.current) {
@@ -210,7 +220,7 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
 
             // cleanup for when mode is off
             return () => {
-                map.getContainer().style.cursor = "grab";
+                container.style.cursor = "";
                 map.off("click", handleClick);
             };
         } else {
@@ -220,7 +230,7 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
                 tempCourtMarkerRef.current = null;
             }
             // make cursor normal if mode is off
-            map.getContainer().style.cursor = "grab";
+            container.style.cursor = "";
         }
     }, [addCourtMode]);
 
