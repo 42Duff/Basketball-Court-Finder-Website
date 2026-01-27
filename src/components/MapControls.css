@@ -36,6 +36,11 @@
     color: hsla(0, 0%, 100%, 0.5);
 }
 
+.map-search:focus {
+    border: 1px solid hsl(29, 100%, 53%);
+    outline: none;
+}
+
 .show-location {
     width: 35px;
     margin-bottom: 0;

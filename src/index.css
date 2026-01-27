@@ -1,17 +1,21 @@
 html, body {
-  height: 100%;
-  background-color: hsl(210, 9%, 13%);;
-  overflow: hidden;
+    height: 100%;
+    background-color: hsl(210, 9%, 13%);;
+    overflow: hidden;
 }
 
 /* positions the legend on to the map */
 .map-wrapper {
-  position: relative;
-  width: 100%;
-  height: 80%;
-  overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 80%;
+    overflow: hidden;
+}
+
+.map-wrapper.add-court-mode {
+    filter: brightness(0.85);
 }
 
 #root {
-  height: 100%;
+    height: 100%;
 }
