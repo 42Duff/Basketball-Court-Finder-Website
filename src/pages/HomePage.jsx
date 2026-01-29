@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Map from "../components/Map";
 import Legend from "../components/Legend";
 import MapControls from "../components/MapControls";
 import FiltersModal from "../components/FiltersModal";
 import AddCourtPopup from "../components/AddCourtPopup";
+import AddCourtModal from "../components/AddCourtModal";
 
 function HomePage() {
 
@@ -21,6 +22,15 @@ function HomePage() {
 
   const toggleAddCourtMode = () => {
     setShowAddCourtMode(prev => !prev);
+  };
+
+  // open addCourtModal / save court modal
+  const [showAddCourtModal, setShowAddCourtModal] = useState(false);
+
+  const handleSubmit = (e) => {
+      e.preventDefault();
+      // ADD LATER: Send data to backend.
+      closeModal();
   };
 
   // toggle Filters Modal
@@ -73,6 +83,7 @@ function HomePage() {
             onToggleFilters={toggleFilters}
             onLocateUserTrigger={locateUserTrigger}
             searchResult={searchResult}
+            onSaveCourt={() => setShowAddCourtModal(true)}
           />
 
           <MapControls 
@@ -88,6 +99,9 @@ function HomePage() {
           }
           {showAddCourtMode && (
             <AddCourtPopup closeAddCourtPopup={() => setShowAddCourtMode(false)} />
+          )}
+          {showAddCourtModal && (
+            <AddCourtModal closeAddCourtModal={() => setShowAddCourtModal(false)} />
           )}
         </div>
     </>

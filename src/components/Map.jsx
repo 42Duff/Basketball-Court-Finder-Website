@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { renderToString } from "react-dom/server";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { COURT_STATUS } from "../constants/courtStatus";
@@ -8,7 +7,6 @@ import "./Map.css";
 import satellitePreview from "../assets/satellite-preview.jpg";
 import streetPreview from "../assets/street-preview.jpg";
 import pinCursor from "../assets/cursorMarkerFull.png";
-import SaveCourtPopup from "./saveCourtPopup";
 
 function createCourtIcon(court) {
     // STATUS.LOW MEDIUM BUSY OR UNREPORTED
@@ -38,13 +36,22 @@ function createCourtIcon(court) {
     });
 }
 
-function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLocateUserTrigger, searchResult } ) {
+function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLocateUserTrigger, searchResult, onSaveCourt } ) {
 
     const mapRef = useRef(null);
     const layersRef = useRef({});
     const [mapMode, setMapMode] = useState("street");
     const tempCourtMarkerRef = useRef(null);
-    const popupHtml = renderToString(<SaveCourtPopup />);
+
+    const popupHtml = `
+        <div class="saveCourtPopup">
+            <p class="saveCourtInfo"> Click on map again to replace marker</p>
+            <p class="orInfo">OR</p>
+            <button id="save-court-btn" class="saveCourtBtn type="button">
+                Save Court
+            </button>
+        </div>
+    `;
 
     useEffect(() => {
 
@@ -215,7 +222,16 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
                     icon: createCourtIcon(tempCourt),
                 })
                     .addTo(map)
-                    .bindPopup(popupHtml).openPopup();
+                    .bindPopup(popupHtml)
+                    .on("popupopen", () => {
+                        const btn = document.getElementById("save-court-btn");
+                        if (btn) {
+                            btn.onclick = () => {
+                                onSaveCourt();
+                            };
+                        }
+                    })
+                    .openPopup();
                 }
             };
 

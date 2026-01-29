@@ -1,6 +1,7 @@
 html, body {
+    margin: 0;
     height: 100%;
-    background-color: hsl(210, 9%, 13%);;
+    background-color: hsl(210, 9%, 13%);
     overflow: hidden;
 }
 
@@ -13,7 +14,7 @@ html, body {
 }
 
 .map-wrapper.add-court-mode {
-    filter: brightness(0.85);
+    filter: brightness(0.95);
 }
 
 #root {

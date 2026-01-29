@@ -1,7 +1,8 @@
 .addCourtPopup {
     position: absolute;
-    border: 3px solid hsla(28, 100%, 56%, 0.75);
-    background-color: hsla(0, 0%, 0%, 0.8);
+    border: 1px solid hsla(28, 100%, 56%, 0.75);
+    border-radius: 0px;
+    background-color: hsla(0, 0%, 0%, 0.75);
     color: hsl(0, 0%, 100%);
     top: 1rem;
     left: 50%;
@@ -15,7 +16,7 @@
 .addCourtInfo {
     padding: 0px;
     margin: 0;
-    font-size: clamp(0.7rem, 1.2vw, 20px);
+    font-size: clamp(0.7rem, 0.95vw, 20px);
     line-height: 1.2;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
