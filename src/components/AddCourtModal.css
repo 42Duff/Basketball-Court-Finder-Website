@@ -1,9 +1,13 @@
 .addCourtModal {
-    min-height: 95vh;
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    width: 100vw;
     display: flex;
+    align-items: center;
     justify-content: center;
-    background: hsla(0, 0%, 0%, 0.4);
-    padding-top: 50px;
+    background: hsla(0, 0%, 0%, 0.8);
+    z-index: 9999;
 }
 
 .addCourtContainer {
@@ -12,11 +16,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 55vh;
-    width: 35vw;
-    border-radius: 12px;
+    width: min(90vw, 700px);
+    max-height: 85vh;
+    padding: 24px 32px;
+    box-sizing: border-box;
+    border-radius: 16px;
     border: 5px solid hsla(28, 100%, 56%, 0.75);
     color: hsl(0, 0%, 100%);
+    overflow-y: auto;
 }
 
 .addCourtH1 {

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { createPortal } from "react-dom";
 import "./FiltersModal.css";
 import PinIcon from "./PinIcon";
 import BallIcon from "./BallIcon";
@@ -34,7 +35,7 @@ function FiltersModal( { closeFiltersModal } ) {
         }));
     };
 
-    return ( 
+    return createPortal( 
         <div 
           className="modal-backdrop"
           onClick={closeFiltersModal}
@@ -95,7 +96,8 @@ function FiltersModal( { closeFiltersModal } ) {
                 </div>
 
             </div>
-        </div>
+        </div>,
+        document.getElementById("modal-root")
     );
 }
 

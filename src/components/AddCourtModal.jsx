@@ -1,23 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
+import { createPortal } from "react-dom";
 import './AddCourtModal.css';
 
-function AddCourtModal() {
-
-    const [showAddCourt, setShowAddCourt] = useState(true);
-
-    const closeAddCourtModal = () => setShowAddCourt(false);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // ADD LATER: Send data to backend.
-        closeModal();
-    };
-
-    if (!showAddCourt) return null;
-
-    return(
-        <div className="addCourtModal">
-            <div className="addCourtContainer">
+function AddCourtModal({ closeAddCourtModal }) {
+    return createPortal(
+        <div 
+          className="addCourtModal" 
+          onClick={closeAddCourtModal}
+        >
+            <div 
+              className="addCourtContainer"
+              onClick={e => e.stopPropagation()}
+            >
                 <button className="closeAddCourtModalBtn" onClick={closeAddCourtModal}>
                     &times;
                 </button>
@@ -55,7 +49,8 @@ function AddCourtModal() {
 
                 </form>
             </div>
-        </div>
+        </div>,
+        document.getElementById("modal-root")
     );
 }
 
