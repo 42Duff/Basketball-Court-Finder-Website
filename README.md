@@ -15,9 +15,10 @@ and satellite view mode:
 
 * Interactive map with basketball court locations
 * toggle on/off addCourt mode that allows users to add court pins to the map
-* Live user-reported court activty (In Progress)
+* Live user-reported court activity (In Progress)
 * Toggle between street and satellite view modes
 * A map legend that can be opened and closed
+* A filters model that will allow the user to narrow their search/pins that appear on the map
 
 ## Tech Stack
 
