@@ -50,7 +50,4 @@ CourtFinder is actively in development. The frontend and map interactions are al
 ## Why I Built This
 Basketball players often spend a lot of time trying to find active courts only to be met with false hope. 
 CourtFinder was built to solve that problem using map-based discovery and community reporting.
-
-## About the Developer
-Built by Michael Duffy - Computer Information Systems grad and former College Basketball player.
-This project combines my interest in software engineering and basketball.
+As both a CIS grad and a former college basketball player, it combines my interests in both software engineering and basketball.
