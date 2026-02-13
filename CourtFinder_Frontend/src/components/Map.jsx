@@ -7,6 +7,7 @@ import "./Map.css";
 import satellitePreview from "../assets/satellite-preview.jpg";
 import streetPreview from "../assets/street-preview.jpg";
 import pinCursor from "../assets/cursorMarkerFull.png";
+import "./SaveCourtPopup.css";
 
 function createCourtIcon(court) {
     // STATUS.LOW MEDIUM BUSY OR UNREPORTED
@@ -42,6 +43,8 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
     const layersRef = useRef({});
     const [mapMode, setMapMode] = useState("street");
     const tempCourtMarkerRef = useRef(null);
+    const [courts, setCourts] = useState([]);
+    const courtLayerRef = useRef(null);
 
     const popupHtml = `
         <div class="saveCourtPopup">
@@ -121,20 +124,40 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
             satellite: satelliteLayer,
             labels: satelliteLabels,
         };
-
-        // sample marker (RESTRUCTURE/REMOVE ONCE BACKEND IS SET UP)
-        const court = {
-            courtType: "INDOOR",
-            historicalStatus: COURT_STATUS.MEDIUM,
-            currentStatus: COURT_STATUS.HIGH,
-        };
-
-        L.marker([38.9072, -77.036], {
-            icon: createCourtIcon(court),
-        })
-        .addTo(map)
-        .bindPopup("Washington, DC");
     });
+
+    // FETCH COURTS FROM BACKEND
+    useEffect(() => {
+        fetch("http://localhost:8000/courts")
+        .then((res) => res.json())
+        .then((data) => {
+            setCourts(data);
+        })
+        .catch((err) => {
+            console.error("Failed to fetch courts:", err);
+        });
+    }, []);
+
+    // CREATE / UPDATE markers when courts load
+    useEffect(() => {
+        const map = mapRef.current;
+        if (!map || courts.length === 0) return;
+
+        // if there is an existing layer, remove it
+        if(courtLayerRef.current) {
+            courtLayerRef.current.clearLayers();
+        } else {
+            courtLayerRef.current = L.layerGroup().addTo(map);
+        }
+
+        courts.forEach((court) => {
+            L.marker([court.latitude, court.longitude], {
+                icon: createCourtIcon(court),
+            })
+            .addTo(courtLayerRef.current)
+            .bindPopup(court.name || "Basketball Court");
+        });
+    }, [courts]);
                                                                                                                                                                                                                                                                                                                                                                          
     // Locate and Use User Position
     useEffect(() => {
@@ -227,7 +250,7 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
                         const btn = document.getElementById("save-court-btn");
                         if (btn) {
                             btn.onclick = () => {
-                                onSaveCourt();
+                                onSaveCourt(e.latlng);
                             };
                         }
                     })

@@ -26,11 +26,26 @@ function HomePage() {
 
   // open addCourtModal / save court modal
   const [showAddCourtModal, setShowAddCourtModal] = useState(false);
+  // state for getting coordinates of add court marker
+  const [newMarkerPosition, setNewMarkerPosition] = useState(null);
 
-  const handleSubmit = (e) => {
-      e.preventDefault();
-      // ADD LATER: Send data to backend.
-      closeModal();
+  const handleCreateCourt = async (courtData) => {
+    const response = await fetch("http://localhost:8000/courts/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(courtData)
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to create court");
+    }
+
+    const data = await response.json();
+    console.log("Created:", data);
+
+    setShowAddCourtModal(false);
   };
 
   // toggle Filters Modal
@@ -83,7 +98,10 @@ function HomePage() {
             onToggleFilters={toggleFilters}
             onLocateUserTrigger={locateUserTrigger}
             searchResult={searchResult}
-            onSaveCourt={() => setShowAddCourtModal(true)}
+            onSaveCourt={(latlng) => {
+              setNewMarkerPosition(latlng);
+              setShowAddCourtModal(true);
+            }}
           />
 
           <MapControls 
@@ -101,7 +119,12 @@ function HomePage() {
             <AddCourtPopup closeAddCourtPopup={() => setShowAddCourtMode(false)} />
           )}
           {showAddCourtModal && (
-            <AddCourtModal closeAddCourtModal={() => setShowAddCourtModal(false)} />
+            <AddCourtModal 
+              closeAddCourtModal={() => setShowAddCourtModal(false)} 
+              markerPosition={newMarkerPosition}
+              onSubmitCourt={handleCreateCourt}
+              exitAddCourtMode={() => setShowAddCourtMode(false)}
+            />
           )}
         </div>
     </>
