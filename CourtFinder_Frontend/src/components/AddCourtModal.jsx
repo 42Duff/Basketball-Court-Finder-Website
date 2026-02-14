@@ -19,7 +19,8 @@ function AddCourtModal({ closeAddCourtModal, markerPosition, onSubmitCourt, exit
             address: streetAddress,
             city: "TEMP",
             zipcode: "TEMP",
-            state: "TEMP"
+            state: "TEMP",
+            status: "pending"
         };
 
 

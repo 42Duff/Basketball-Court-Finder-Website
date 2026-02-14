@@ -9,6 +9,7 @@ class CourtBase(BaseModel):
     city: str
     zipcode: str
     state: str
+    status: str
 
 class CourtCreate(CourtBase):
     pass

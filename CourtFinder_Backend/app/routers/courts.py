@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
+from typing import Optional
 from sqlalchemy.orm import Session
 from .. import models, schemas
 from ..database import get_db
@@ -20,8 +21,16 @@ def create_court(court: schemas.CourtCreate, db: Session = Depends(get_db)):
 
 # READ ALL
 @router.get("/", response_model=list[schemas.CourtResponse])
-def get_courts(db: Session = Depends(get_db)):
-    return db.query(models.Court).all()
+def get_courts(
+    status: Optional[str] = Query(None),
+    db: Session = Depends(get_db)
+):
+    query = db.query(models.Court)
+
+    if status:
+        query = query.filter(models.Court.status == status)
+
+    return query.all()
 
 #READ ONE
 @router.get("/{court_id}", response_model=schemas.CourtResponse)

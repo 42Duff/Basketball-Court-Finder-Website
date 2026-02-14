@@ -13,3 +13,4 @@ class Court(Base):
     city = Column(String, nullable=False)
     zipcode = Column(String, nullable=False)
     state = Column(String, nullable=False)
+    status = Column(String, default="pending")

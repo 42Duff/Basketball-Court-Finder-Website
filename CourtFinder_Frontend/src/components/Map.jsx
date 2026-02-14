@@ -128,7 +128,7 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
 
     // FETCH COURTS FROM BACKEND
     useEffect(() => {
-        fetch("http://localhost:8000/courts")
+        fetch("http://localhost:8000/courts?status=approved")
         .then((res) => res.json())
         .then((data) => {
             setCourts(data);
