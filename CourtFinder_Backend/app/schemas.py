@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 
 class CourtBase(BaseModel):
     name: str
@@ -16,6 +17,18 @@ class CourtCreate(CourtBase):
 
 class CourtResponse(CourtBase):
     id: int
+
+    class Config:
+        from_attributes = True
+
+class CourtReportCreate(BaseModel):
+    players_count: int
+
+class CourtReportResponse(BaseModel):
+    id: int
+    court_id: int
+    players_count: int
+    reported_at: datetime
 
     class Config:
         from_attributes = True

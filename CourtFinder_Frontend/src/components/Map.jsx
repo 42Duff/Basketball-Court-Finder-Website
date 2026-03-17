@@ -37,7 +37,7 @@ function createCourtIcon(court) {
     });
 }
 
-function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLocateUserTrigger, searchResult, onSaveCourt } ) {
+function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLocateUserTrigger, searchResult, onSaveCourt, onReportCourt, refreshTrigger } ) {
 
     const mapRef = useRef(null);
     const layersRef = useRef({});
@@ -46,11 +46,11 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
     const [courts, setCourts] = useState([]);
     const courtLayerRef = useRef(null);
 
-    const popupHtml = `
+    const saveCourtPopupHtml = `
         <div class="saveCourtPopup">
             <p class="saveCourtInfo"> Click on map again to replace marker</p>
             <p class="orInfo">OR</p>
-            <button id="save-court-btn" class="saveCourtBtn type="button">
+            <button id="save-court-btn" class="saveCourtBtn" type="button">
                 Save Court
             </button>
         </div>
@@ -127,16 +127,52 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
     });
 
     // FETCH COURTS FROM BACKEND
-    useEffect(() => {
-        fetch("http://localhost:8000/courts?status=approved")
-        .then((res) => res.json())
-        .then((data) => {
-            setCourts(data);
-        })
-        .catch((err) => {
+    async function loadCourts() {
+
+        try {
+
+            // FETCH COURTS
+            const courtsRes = await fetch("http://localhost:8000/courts/?status=approved");
+            const courtsData = await courtsRes.json();
+
+            // FETCH COURT REPORTS
+            const reportsRes = await fetch("http://localhost:8000/courts/report");
+            const reportsData = await reportsRes.json();
+
+            const historicalRes = await fetch("http://localhost:8000/courts/historical");
+            const historicalData = await historicalRes.json();
+            
+            const mergedCourts = courtsData.map((court) => {
+
+                // LIVE DATA
+                const report = reportsData.find(r => r.court_id === court.id);
+
+                // HISTORICAL DATA
+                const historical = historicalData.find(h => h.court_id === court.id);
+
+                return {
+                    ...court,
+
+                    currentStatus: report
+                        ? COURT_STATUS[report.activity_level]
+                        : COURT_STATUS.UNREPORTED,
+
+                    historicalStatus: historical
+                        ? COURT_STATUS[historical.activity_level]
+                        : COURT_STATUS.UNREPORTED
+                };
+            });
+
+            setCourts(mergedCourts);
+
+        } catch (err) {
             console.error("Failed to fetch courts:", err);
-        });
-    }, []);
+        }
+    }
+
+    useEffect(() => {
+        loadCourts();
+    }, [refreshTrigger]);
 
     // CREATE / UPDATE markers when courts load
     useEffect(() => {
@@ -151,13 +187,46 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
         }
 
         courts.forEach((court) => {
+
+            const viewCourtPopupHTML = `
+                <div class="viewCourtPopup">
+                    <h1 class="courtName">${court.name || "Basketball Court"}</h1>
+                    <button class="reportCourtActivityBtn" type="button">
+                        Report Activity
+                    </button>
+                    <button id="view-court-btn" class="viewCourtBtn" type="button">
+                        View Court
+                    </button>
+                </div>
+            `;
+
             L.marker([court.latitude, court.longitude], {
                 icon: createCourtIcon(court),
             })
             .addTo(courtLayerRef.current)
-            .bindPopup(court.name || "Basketball Court");
+            .bindPopup(viewCourtPopupHTML)
+            .on("popupopen", (e) => {
+                const popup = e.popup.getElement();
+                const btn = popup.querySelector(".reportCourtActivityBtn");
+
+                if (btn) {
+                    btn.addEventListener("click", () => {
+                        onReportCourt(court.id);
+                    });
+                }
+            })
         });
     }, [courts]);
+
+    // Makes markers auto update every 30 seconds
+    useEffect(() => {
+
+        const interval = setInterval(() => {
+            loadCourts();
+        }, 30000); // 30 seconds
+
+        return () => clearInterval(interval);
+    }, []);
                                                                                                                                                                                                                                                                                                                                                                          
     // Locate and Use User Position
     useEffect(() => {
@@ -245,7 +314,7 @@ function Map ( { onToggleLegend, onAddCourt, addCourtMode, onToggleFilters, onLo
                     icon: createCourtIcon(tempCourt),
                 })
                     .addTo(map)
-                    .bindPopup(popupHtml)
+                    .bindPopup(saveCourtPopupHtml)
                     .on("popupopen", () => {
                         const btn = document.getElementById("save-court-btn");
                         if (btn) {

@@ -5,6 +5,7 @@ import MapControls from "../components/MapControls";
 import FiltersModal from "../components/FiltersModal";
 import AddCourtPopup from "../components/AddCourtPopup";
 import AddCourtModal from "../components/AddCourtModal";
+import ReportCourtModal from "../components/reportCourtModal";
 
 function HomePage() {
 
@@ -47,6 +48,14 @@ function HomePage() {
 
     setShowAddCourtModal(false);
   };
+
+  // Report court activity
+  const [showReportCourtModal, setShowReportCourtModal] = useState(false);
+  //handler stores selected court ID
+  const [selectedCourtId, setSelectedCourtId] = useState(null);
+
+  // Trigger a refresh after submitting report
+  const [reportRefreshTrigger, setReportRefreshTrigger] = useState(0);
 
   // toggle Filters Modal
   const [showFilters, setShowFilters] = useState(false);
@@ -102,6 +111,11 @@ function HomePage() {
               setNewMarkerPosition(latlng);
               setShowAddCourtModal(true);
             }}
+            onReportCourt={(courtId) => {
+              setSelectedCourtId(courtId);
+              setShowReportCourtModal(true);
+            }}
+            refreshTrigger={reportRefreshTrigger}
           />
 
           <MapControls 
@@ -124,6 +138,15 @@ function HomePage() {
               markerPosition={newMarkerPosition}
               onSubmitCourt={handleCreateCourt}
               exitAddCourtMode={() => setShowAddCourtMode(false)}
+            />
+          )}
+          {showReportCourtModal && (
+            <ReportCourtModal
+              courtId={selectedCourtId}
+              closeReportCourtModal={() => setShowReportCourtModal(false)}
+              onReportSuccess={() => {
+                setReportRefreshTrigger(prev => prev+1);
+              }} 
             />
           )}
         </div>
